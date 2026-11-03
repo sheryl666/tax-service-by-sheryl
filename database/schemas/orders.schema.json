@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "orders",
+  "type": "object",
+  "required": ["company_name", "credit_code", "service_type", "package_key", "package_price", "status", "contact_phone", "status_logs", "created_at", "updated_at"],
+  "properties": {
+    "company_name": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "credit_code": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "service_type": { "enum": ["annual", "tax", "invoice", "license"] },
+    "package_key": { "enum": ["basic", "plus", "full"] },
+    "package_price": { "type": "number", "minimum": 0 },
+    "product_id": { "type": "string", "maxLength": 128 },
+    "product_name": { "type": "string", "maxLength": 200 },
+    "openid": { "type": "string", "maxLength": 128 },
+    "out_trade_no": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "payment_description": { "type": "string", "maxLength": 127 },
+    "payment_amount_cents": { "type": "integer", "minimum": 1 },
+    "payment_currency": { "enum": ["CNY"] },
+    "payment_status": { "enum": ["unpaid", "paying", "paid", "closed", "refunding", "refunded"] },
+    "transaction_id": { "type": ["string", "null"], "maxLength": 64 },
+    "payer_openid": { "type": ["string", "null"], "maxLength": 128 },
+    "paid_at": { "type": ["object", "string", "null"] },
+    "refund_id": { "type": ["string", "null"], "maxLength": 64 },
+    "refunded_at": { "type": ["object", "string", "null"] },
+    "status": { "enum": ["pending", "processing", "completed", "refunded"] },
+    "contact_phone": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "remark": { "type": "string", "maxLength": 500 },
+    "staff_note": { "type": "string", "maxLength": 500 },
+    "assigned_staff": { "type": ["string", "null"], "maxLength": 64 },
+    "status_logs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["status", "operator", "note", "time"],
+        "properties": {
+          "status": { "enum": ["pending", "processing", "completed", "refunded"] },
+          "operator": { "type": "string" },
+          "note": { "type": "string", "maxLength": 500 },
+          "time": { "type": ["object", "string"] }
+        }
+      }
+    },
+    "created_at": { "type": ["object", "string"] },
+    "updated_at": { "type": ["object", "string"] }
+  }
+}

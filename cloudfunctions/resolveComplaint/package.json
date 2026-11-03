@@ -1,0 +1,10 @@
+{
+  "name": "resolve-complaint",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.18.0",
+    "wx-server-sdk": "latest"
+  }
+}

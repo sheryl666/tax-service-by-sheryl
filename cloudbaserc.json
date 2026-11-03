@@ -1,0 +1,203 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "version": "2.0",
+  "envId": "cloud1-d9gju2ncx57d61c07",
+  "functionRoot": "./cloudfunctions",
+  "functions": [
+    {
+      "name": "adminLogin",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getOrders",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getOrderDetail",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "updateOrderStatus",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getComplaints",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "createComplaint",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" }
+    },
+    {
+      "name": "resolveComplaint",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "claimOrder",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getDashboardStats",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getOperators",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "createOperator",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "updateOperatorStatus",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "toggleOperatorStatus",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "getActiveProducts",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" }
+    },
+    {
+      "name": "createPaymentOrder",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" }
+    },
+    {
+      "name": "getMyOrder",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" }
+    },
+    {
+      "name": "getMyOrders",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" }
+    },
+    {
+      "name": "getProducts",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "saveProduct",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "ADMIN_JWT_SECRET": "{{env.LANTERN_ADMIN_JWT_SECRET}}" }
+    },
+    {
+      "name": "searchCompany",
+      "handler": "index.main",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 256,
+      "installDependency": true,
+      "aclRule": { "invoke": "auth != null" },
+      "envVariables": { "TYC_TOKEN": "{{env.LANTERN_TYC_TOKEN}}" }
+    }
+  ]
+}

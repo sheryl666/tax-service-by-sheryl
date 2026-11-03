@@ -1,0 +1,39 @@
+<view class="detail-nav" style="padding-top: {{statusBarHeight}}px;">
+  <view class="detail-nav-inner" style="height: {{navBarHeight}}px; padding-right: {{capsulePaddingRight}}px;">
+    <view class="back-button" role="button" bindtap="goBack" aria-label="返回"><image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxNzIzMzgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Im0xNSAxOC02LTYgNi02Ii8+Cjwvc3ZnPgo=" mode="aspectFit" /></view><text class="detail-nav-title">认证详情</text>
+  </view>
+</view>
+<view class="page">
+  <view wx:if="{{loading}}" class="state-card">正在加载服务…</view>
+
+  <form wx:elif="{{product}}" bindsubmit="submitOrder">
+    <view class="detail-card">
+      <view class="card-head"><text class="card-title">企业信息</text><text class="{{testMode ? 'test-chip' : 'status-chip'}}">{{testMode ? '测试数据' : '待人工核验'}}</text></view>
+      <label class="field"><text>企业名称</text><input value="{{form.companyName}}" data-field="companyName" bindinput="onInput" placeholder="请输入营业执照上的企业名称" maxlength="200" /></label>
+      <label class="field"><text>统一社会信用代码</text><input value="{{form.creditCode}}" data-field="creditCode" bindinput="onInput" placeholder="请输入 18 位统一社会信用代码" maxlength="18" /></label>
+      <label class="field"><text>联系电话</text><input value="{{form.contactPhone}}" data-field="contactPhone" bindinput="onInput" type="number" placeholder="请输入 11 位手机号" maxlength="11" /></label>
+    </view>
+
+    <view class="detail-card product-card">
+      <image class="annual-report-image" src="/assets/annual-report-service.jpg" mode="widthFix" />
+      <view class="card-head"><text class="card-title">选择专属服务</text></view>
+      <view class="package-list">
+        <view wx:for="{{products}}" wx:key="_id" class="package {{product._id === item._id ? 'selected' : ''}} {{submitting ? 'disabled' : ''}}" role="button" data-id="{{item._id}}" bindtap="selectProduct" aria-label="选择{{item.name}}，价格{{item.priceText}}元">
+          <view class="package-info"><text class="product-name">{{item.name}}</text></view>
+          <view class="price"><text>¥</text>{{item.priceText}}</view>
+        </view>
+      </view>
+      <text class="product-description">{{product.description}}</text>
+    </view>
+    <view class="submit-bar"><button class="pay-button" form-type="submit" loading="{{submitting}}" disabled="{{submitting || testMode}}">{{testMode ? '测试数据不可支付' : (submitting ? '正在创建订单…' : '确认下单并支付')}}</button></view>
+  </form>
+
+  <view wx:if="{{error}}" class="notice error">{{error}}</view>
+  <view wx:if="{{result}}" class="result-card {{result.state}}">
+    <text class="result-title">{{result.title}}</text>
+    <text wx:if="{{result.tradeNo}}" class="result-number">订单号：{{result.tradeNo}}</text>
+    <text wx:if="{{result.state === 'paid'}}" class="result-tip">工作人员收到订单后会尽快联系你</text>
+    <text wx:elif="{{result.state === 'confirming'}}" class="result-tip">请稍后在办理记录中刷新进度，切勿重复付款</text>
+    <button wx:if="{{result.state === 'paid' || result.state === 'confirming'}}" class="records-link" bindtap="goToRecords">查看办理记录</button>
+  </view>
+</view>

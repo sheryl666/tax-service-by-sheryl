@@ -1,0 +1,61 @@
+<view class="topbar" style="padding-top: {{statusBarHeight}}px;">
+  <view class="brand-row" style="padding-right: {{capsulePaddingRight}}px;">
+    <view class="brand-lockup">
+      <view class="brand-mark"><image class="brand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Ik00IDIxVjdsOC00IDggNHYxNCIvPjxwYXRoIGQ9Ik04IDIxdi04aDh2OE04IDloLjAxTTEyIDloLjAxTTE2IDloLjAxIi8+Cjwvc3ZnPgo=" mode="aspectFit" /></view>
+      <view><text class="brand-name">名企服务</text><text class="brand-caption">企业认证服务助手</text></view>
+    </view>
+    <view class="secure-pill"><image class="secure-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwODcyNjIiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Ik0yMCAxM2MwIDUtMy41IDcuNS04IDktNC41LTEuNS04LTQtOC05VjVsOC0zIDggM3Y4WiIvPjxwYXRoIGQ9Im05IDEyIDIgMiA0LTQiLz4KPC9zdmc+Cg==" mode="aspectFit" />信息加密</view>
+  </view>
+</view>
+<view class="page">
+  <view class="page-head"><text class="page-title">联系客服</text><text class="page-copy">提交反馈后，客服会在服务时间内尽快与你联系</text></view>
+
+  <view wx:if="{{loading}}" class="state-card">正在加载订单…</view>
+  <view wx:elif="{{loadError}}" class="state-card error-state">{{loadError}}</view>
+  <view wx:elif="{{!orderOptions.length}}" class="state-card">
+    <text class="empty-title">还没有可反馈的订单</text><text class="empty-copy">请先完成服务下单，再提交订单相关问题。</text><view class="home-button" role="button" bindtap="goHome">返回首页</view>
+  </view>
+
+  <view wx:else class="feedback-card">
+    <view class="form-field">
+      <text class="field-label">选择订单 <text class="required">*</text></text>
+      <picker range="{{orderOptions}}" range-key="label" value="{{orderIndex}}" bindchange="onOrderChange">
+        <view class="picker-control {{orderIndex < 0 ? 'placeholder' : ''}}">{{orderIndex < 0 ? '请选择需要反馈的订单' : orderOptions[orderIndex].label}}<image class="picker-arrow" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2Njc0OGEiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Im02IDkgNiA2IDYtNiIvPgo8L3N2Zz4K" mode="aspectFit" /></view>
+      </picker>
+      <text wx:if="{{errors.order}}" class="field-error">{{errors.order}}</text>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label">联系电话 <text class="required">*</text></text>
+      <input class="control" value="{{form.phone}}" bindinput="onPhoneInput" type="number" maxlength="11" placeholder="请输入 11 位手机号码" />
+      <text wx:if="{{errors.phone}}" class="field-error">{{errors.phone}}</text>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label">投诉事项 <text class="required">*</text></text>
+      <view class="textarea-wrap"><textarea value="{{form.content}}" bindinput="onContentInput" maxlength="500" placeholder="请详细描述遇到的问题、期望的处理方式" /><text class="char-count">{{contentLength}} / 500</text></view>
+      <text wx:if="{{errors.content}}" class="field-error">{{errors.content}}</text>
+    </view>
+
+    <view class="privacy-note"><image class="privacy-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDhhNzgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxyZWN0IHg9IjUiIHk9IjEwIiB3aWR0aD0iMTQiIGhlaWdodD0iMTEiIHJ4PSIyIi8+PHBhdGggZD0iTTggMTBWN2E0IDQgMCAwIDEgOCAwdjMiLz4KPC9zdmc+Cg==" mode="aspectFit" /><text>你提交的信息仅用于本次问题处理，我们会妥善保护你的个人信息。</text></view>
+    <view class="submit-button {{submitting ? 'disabled' : ''}}" role="button" aria-disabled="{{submitting}}" bindtap="submitFeedback">{{submitting ? '正在提交…' : '提交反馈'}}</view>
+  </view>
+  <view class="legal-footer"><text class="legal-link" role="button" bindtap="openPrivacyPolicy">隐私政策</text><text class="legal-separator">·</text><text>个人信息仅用于订单办理与客户服务</text></view>
+</view>
+
+<view class="info-fab" role="button" bindtap="openContactModal" aria-label="查看客服联系方式"><image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Ik0zIDE4di02YTkgOSAwIDAgMSAxOCAwdjYiLz4KICA8cGF0aCBkPSJNMjEgMTlhMiAyIDAgMCAxLTIgMmgtMWEyIDIgMCAwIDEtMi0ydi0zYTIgMiAwIDAgMSAyLTJoM3pNMyAxOWEyIDIgMCAwIDAgMiAyaDFhMiAyIDAgMCAwIDItMnYtM2EyIDIgMCAwIDAtMi0ySDN6Ii8+Cjwvc3ZnPgo=" mode="aspectFit" /></view>
+
+<view wx:if="{{showContactModal}}" class="contact-modal" bindtap="closeContactModal">
+  <view class="contact-modal-card" catchtap="stopPropagation">
+    <view class="modal-head"><text class="modal-title">客服联系方式</text><view class="modal-close" role="button" bindtap="closeContactModal" aria-label="关闭客服联系方式"><image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2Njc0OGEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8cGF0aCBkPSJtNiA2IDEyIDEyTTE4IDYgNiAxOCIvPgo8L3N2Zz4K" mode="aspectFit" /></view></view>
+    <view class="contact-modal-content">
+      <view class="contact-details">
+        <text class="contact-label">客服电话</text>
+        <text class="contact-phone">19885839155</text>
+        <text class="service-hours">工作日 09:00–18:00\n紧急问题建议直接电话联系</text>
+        <view class="call-button" role="button" bindtap="callCustomerService"><image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjc4YzUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8cGF0aCBkPSJNMjIgMTYuOTJ2M2EyIDIgMCAwIDEtMi4xOCAyIDE5LjggMTkuOCAwIDAgMS04LjYzLTMuMDcgMTkuNSAxOS41IDAgMCAxLTYtNkExOS44IDE5LjggMCAwIDEgMi4xMiA0LjE4IDIgMiAwIDAgMSA0LjExIDJoM2EyIDIgMCAwIDEgMiAxLjcyYy4xMi45LjMzIDEuNzguNjIgMi42M2EyIDIgMCAwIDEtLjQ1IDIuMTFMOCA5LjczYTE2IDE2IDAgMCAwIDYgNmwxLjI3LTEuMjdhMiAyIDAgMCAxIDIuMTEtLjQ1Yy44NS4yOSAxLjczLjUgMi42My42MkEyIDIgMCAwIDEgMjIgMTYuOTJaIi8+Cjwvc3ZnPgo=" mode="aspectFit" />拨打电话</view>
+      </view>
+      <view class="qr-wrap"><image class="contact-qr" src="/assets/customer-service-qr.jpg" mode="aspectFit" show-menu-by-longpress="true" /><text>长按识别企业微信二维码</text></view>
+    </view>
+  </view>
+</view>

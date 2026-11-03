@@ -1,0 +1,24 @@
+<view class="detail-nav" style="padding-top: {{statusBarHeight}}px;">
+  <view class="detail-nav-inner" style="height: {{navBarHeight}}px; padding-right: {{capsulePaddingRight}}px;">
+    <view class="back-button" role="button" bindtap="goBack" aria-label="返回"><image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxNzIzMzgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Im0xNSAxOC02LTYgNi02Ii8+Cjwvc3ZnPgo=" mode="aspectFit" /></view><text class="detail-nav-title">查询结果</text>
+  </view>
+</view>
+<view class="page">
+  <view wx:if="{{testMode}}" class="test-banner"><text class="test-banner-title">测试结果预览</text><text>以下为模拟企业数据，仅用于检查页面样式，不会调用天眼查或产生真实查询费用。</text></view>
+  <view class="section-head">
+    <view><text class="section-title">{{query ? '“' + query + '”的搜索结果' : '搜索结果'}}</text><text class="section-copy">请核对企业信息后发起认证</text></view>
+    <text class="result-count">共 {{results.length}} 家</text>
+  </view>
+  <view class="results-list">
+    <view wx:for="{{results}}" wx:key="key" class="company-card">
+      <view class="company-topline"><text class="company-name">{{item.name}}</text><view class="cert-button" role="button" data-index="{{index}}" bindtap="useCompany" aria-label="立即认证{{item.name}}"><view class="cert-button-surface">立即认证</view></view></view>
+      <view class="company-meta">
+        <view class="meta-row"><text class="meta-label">信用代码</text><text class="meta-value">{{item.code || '将在办理时填写并核验'}}</text></view>
+        <view class="meta-row"><text class="meta-label">法定代表人</text><text class="meta-value">{{item.legalPerson || '—'}}</text></view>
+        <view class="meta-row"><text class="meta-label">注册资本</text><text class="meta-value">{{item.regCapital || '—'}}</text></view>
+        <view class="meta-row"><text class="meta-label">成立日期</text><text class="meta-value">{{item.estiblishTime || '—'}}</text></view>
+        <view class="meta-row"><text class="meta-label">经营状态</text><text class="meta-value">{{item.regStatus || '—'}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>

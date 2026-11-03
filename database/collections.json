@@ -1,0 +1,45 @@
+{
+  "collections": [
+    {
+      "name": "orders",
+      "description": "订单表",
+      "permissions": { "read": false, "write": false },
+      "indexes": [
+        { "name": "out_trade_no_unique", "unique": true, "fields": [{ "field": "out_trade_no", "order": "asc" }] },
+        { "name": "openid_created_at", "unique": false, "fields": [{ "field": "openid", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "payment_status_created_at", "unique": false, "fields": [{ "field": "payment_status", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "status_created_at", "unique": false, "fields": [{ "field": "status", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "assigned_staff_created_at", "unique": false, "fields": [{ "field": "assigned_staff", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "assigned_staff_status_created_at", "unique": false, "fields": [{ "field": "assigned_staff", "order": "asc" }, { "field": "status", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "created_at", "unique": false, "fields": [{ "field": "created_at", "order": "desc" }] }
+      ]
+    },
+    {
+      "name": "service_products",
+      "description": "小程序服务商品与价格表",
+      "permissions": { "read": false, "write": false },
+      "indexes": [
+        { "name": "service_package_unique", "unique": true, "fields": [{ "field": "service_type", "order": "asc" }, { "field": "package_key", "order": "asc" }] },
+        { "name": "status_updated_at", "unique": false, "fields": [{ "field": "status", "order": "asc" }, { "field": "updated_at", "order": "desc" }] }
+      ]
+    },
+    {
+      "name": "complaints",
+      "description": "投诉工单表",
+      "permissions": { "read": false, "write": false },
+      "indexes": [
+        { "name": "status_created_at", "unique": false, "fields": [{ "field": "status", "order": "asc" }, { "field": "created_at", "order": "desc" }] },
+        { "name": "order_id", "unique": false, "fields": [{ "field": "order_id", "order": "asc" }] }
+      ]
+    },
+    {
+      "name": "admin_users",
+      "description": "后台账号表",
+      "permissions": { "read": false, "write": false },
+      "indexes": [
+        { "name": "username_unique", "unique": true, "fields": [{ "field": "username", "order": "asc" }] },
+        { "name": "role_status", "unique": false, "fields": [{ "field": "role", "order": "asc" }, { "field": "status", "order": "asc" }] }
+      ]
+    }
+  ]
+}

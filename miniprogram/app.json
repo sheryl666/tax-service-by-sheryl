@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/company/company",
+    "pages/records/records",
+    "pages/contact/contact",
+    "pages/index/index",
+    "pages/results/results",
+    "pages/privacy/privacy"
+  ],
+  "window": {
+    "navigationBarTitleText": "名企服务",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f4f7fb"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#7b8799",
+    "selectedColor": "#123a70",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/company/company", "text": "首页" },
+      { "pagePath": "pages/records/records", "text": "办理记录" },
+      { "pagePath": "pages/contact/contact", "text": "联系客服" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

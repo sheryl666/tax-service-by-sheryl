@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "admin_users",
+  "type": "object",
+  "required": ["username", "password_hash", "display_name", "role", "status", "created_at"],
+  "properties": {
+    "username": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "password_hash": { "type": "string", "pattern": "^\\$2[aby]\\$" },
+    "display_name": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "role": { "enum": ["admin", "operator"] },
+    "status": { "enum": ["active", "disabled"] },
+    "created_at": { "type": ["object", "string"] }
+  }
+}

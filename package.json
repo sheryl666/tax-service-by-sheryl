@@ -1,0 +1,25 @@
+{
+  "name": "lantern-tax-service-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "财税代办小程序微信云开发后端",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "node --test tests/e2e-order-workflow.test.js",
+    "test:payment": "npm --prefix cloudfunctions/payment2026-hg9hxxv0-demo-scfweb test",
+    "check": "node --check cloudfunctions/adminLogin/index.js && node --check cloudfunctions/getOrders/index.js && node --check cloudfunctions/getOrderDetail/index.js && node --check cloudfunctions/updateOrderStatus/index.js && node --check cloudfunctions/getComplaints/index.js && node --check cloudfunctions/createComplaint/index.js && node --check cloudfunctions/resolveComplaint/index.js && node --check cloudfunctions/claimOrder/index.js && node --check cloudfunctions/getDashboardStats/index.js && node --check cloudfunctions/getOperators/index.js && node --check cloudfunctions/createOperator/index.js && node --check cloudfunctions/updateOperatorStatus/index.js && node --check cloudfunctions/toggleOperatorStatus/index.js && node --check cloudfunctions/getActiveProducts/index.js && node --check cloudfunctions/createPaymentOrder/index.js && node --check cloudfunctions/getMyOrder/index.js && node --check cloudfunctions/getMyOrders/index.js && node --check cloudfunctions/getProducts/index.js && node --check cloudfunctions/saveProduct/index.js && node --check cloudfunctions/searchCompany/index.js && node --check cloudfunctions/payment2026-hg9hxxv0-demo-scfweb/services/orderService.js && node --check cloudfunctions/payment2026-hg9hxxv0-demo-scfweb/services/payService.js && node --check scripts/init-admin.js && node --check scripts/init-mvp-product.js",
+    "check:all": "npm run test && npm run check && npm run test:payment && npm --prefix admin-web run check",
+    "deploy:admin": "npm run check:all && tcb hosting deploy admin-web/dist -e cloud1-d9gju2ncx57d61c07 --json",
+    "smoke:v12": "node scripts/smoke-v12.js",
+    "hash-password": "node scripts/hash-password.js",
+    "generate-jwt-secret": "node scripts/generate-jwt-secret.js",
+    "init-admin": "node scripts/init-admin.js"
+    ,"init-products": "node scripts/init-mvp-product.js",
+    "init-mvp-product": "node scripts/init-mvp-product.js"
+  },
+  "devDependencies": {
+    "@cloudbase/cli": "^3.6.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

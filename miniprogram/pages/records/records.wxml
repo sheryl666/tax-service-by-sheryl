@@ -1,0 +1,40 @@
+<view class="topbar" style="padding-top: {{statusBarHeight}}px;">
+  <view class="brand-row" style="padding-right: {{capsulePaddingRight}}px;">
+    <view class="brand-lockup">
+      <view class="brand-mark"><image class="brand-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Ik00IDIxVjdsOC00IDggNHYxNCIvPjxwYXRoIGQ9Ik04IDIxdi04aDh2OE04IDloLjAxTTEyIDloLjAxTTE2IDloLjAxIi8+Cjwvc3ZnPgo=" mode="aspectFit" /></view>
+      <view><text class="brand-name">名企服务</text><text class="brand-caption">企业认证服务助手</text></view>
+    </view>
+    <view class="secure-pill"><image class="secure-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwODcyNjIiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxwYXRoIGQ9Ik0yMCAxM2MwIDUtMy41IDcuNS04IDktNC41LTEuNS04LTQtOC05VjVsOC0zIDggM3Y4WiIvPjxwYXRoIGQ9Im05IDEyIDIgMiA0LTQiLz4KPC9zdmc+Cg==" mode="aspectFit" />信息加密</view>
+  </view>
+</view>
+<view class="page">
+  <view class="page-head"><text class="page-title">办理记录</text></view>
+
+  <view class="segmented">
+    <button class="segment {{filter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="setFilter">全部 {{counts.all}}</button>
+    <button class="segment {{filter === 'pending' ? 'active' : ''}}" data-filter="pending" bindtap="setFilter">待支付 {{counts.pending}}</button>
+    <button class="segment {{filter === 'paid' ? 'active' : ''}}" data-filter="paid" bindtap="setFilter">已支付 {{counts.paid}}</button>
+  </view>
+
+  <view wx:if="{{loading && !list.length}}" class="state-card">正在加载办理记录…</view>
+  <view wx:elif="{{error && !list.length}}" class="state-card error-state"><text>{{error}}</text><button class="secondary-button" bindtap="retry">重新加载</button></view>
+  <view wx:elif="{{!filteredList.length}}" class="state-card empty-state">
+    <text class="empty-title">暂无对应记录</text><text class="empty-copy">完成服务下单后，可以在这里查看支付和办理进度。</text><button class="primary-button" bindtap="goHome">返回首页</button>
+  </view>
+
+  <view wx:else class="orders-list">
+    <view wx:for="{{filteredList}}" wx:key="_id" class="order-card">
+      <view class="order-main">
+        <view class="order-head"><text class="order-number">订单号：{{item.out_trade_no}}</text><text class="order-status {{item.statusClass}}"><text class="status-dot"></text>{{item.displayStatus}}</text></view>
+        <text class="company-name">{{item.company_name}}</text>
+        <text class="order-service">{{item.product_name || '工商年报服务'}}</text>
+        <view class="order-details"><text class="order-date">{{item.createdAtText}}</text><text class="order-price"><text>¥</text>{{item.amountText}}</text></view>
+      </view>
+      <view class="order-footer">
+        <button wx:if="{{item.canPay}}" class="pay-button" data-id="{{item._id}}" bindtap="payOrder" loading="{{payingId === item._id}}" disabled="{{!!payingId}}">去支付</button>
+        <text wx:elif="{{item.paymentGroup === 'paid'}}" class="paid-note"><image class="paid-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDhhNzgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjkiLz48cGF0aCBkPSJtOCAxMiAzIDMgNS02Ii8+Cjwvc3ZnPgo=" mode="aspectFit" />支付完成</text>
+        <text wx:else class="closed-note">如需重新办理，请返回首页下单</text>
+      </view>
+    </view>
+  </view>
+</view>

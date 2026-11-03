@@ -1,0 +1,37 @@
+.page { padding: 40rpx 36rpx 208rpx; }
+.page-head { padding: 4rpx 4rpx 32rpx; }
+.page-title { display: block; }
+.page-title { color: #172338; font-size: 52rpx; font-weight: 800; line-height: 1.3; }
+.segmented { display: flex; align-items: stretch; gap: 8rpx; margin-bottom: 32rpx; padding: 8rpx; border: 1rpx solid #dfe6ef; border-radius: 28rpx; background: #ebf0f6; }
+.segmented .segment { flex: 1 1 0; }
+.segment { width: 100%; min-width: 0; height: 88rpx; padding: 0 4rpx; border-radius: 20rpx; flex: 1 1 0; color: #66748a; background-color: transparent; font-size: 26rpx; font-weight: 700; line-height: 88rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.segment.active { color: #123a70; background-color: #fff; box-shadow: 0 6rpx 18rpx rgba(31,57,90,.09); }
+.state-card, .order-card { border: 1rpx solid #dfe6ef; border-radius: 28rpx; background: #fff; box-shadow: 0 8rpx 28rpx rgba(31,57,90,.07); }
+.state-card { padding: 70rpx 32rpx; color: #66748a; font-size: 24rpx; line-height: 1.6; text-align: center; }
+.error-state { color: #c43b44; background: #fff0f1; }
+.empty-title, .empty-copy { display: block; }
+.empty-title { color: #172338; font-size: 29rpx; font-weight: 800; }
+.empty-copy { margin-top: 12rpx; }
+.primary-button, .secondary-button { margin-top: 26rpx; height: 96rpx; border-radius: 24rpx; font-size: 28rpx; font-weight: 800; line-height: 96rpx; overflow: hidden; }
+.primary-button { color: #fff; background-color: #123a70; }
+.secondary-button { color: #123a70; border: 1rpx solid #c8d6e8; background-color: #fff; }
+.orders-list { display: flex; flex-direction: column; gap: 24rpx; }
+.order-card { overflow: hidden; border-radius: 36rpx; }
+.order-main { padding: 36rpx; }
+.order-head { display: flex; align-items: center; justify-content: space-between; gap: 18rpx; }
+.order-number { min-width: 0; color: #66748a; font-size: 24rpx; line-height: 1.4; word-break: break-all; }
+.order-status { display: flex; flex: 0 0 auto; align-items: center; gap: 8rpx; color: #0d8a78; font-size: 24rpx; font-weight: 800; }
+.order-status.processing { color: #2b78c5; }
+.order-status.refunded, .order-status.closed { color: #66748a; }
+.status-dot { width: 14rpx; height: 14rpx; border-radius: 50%; background: currentColor; }
+.company-name { display: block; margin-top: 30rpx; color: #172338; font-size: 34rpx; font-weight: 800; line-height: 1.45; }
+.order-service { display: block; margin-top: 10rpx; color: #66748a; font-size: 26rpx; }
+.order-details { display: flex; align-items: flex-end; justify-content: space-between; gap: 20rpx; margin-top: 26rpx; }
+.order-date { color: #66748a; font-size: 24rpx; }
+.order-price { color: #172338; font-size: 42rpx; font-weight: 800; }
+.order-price text { margin-right: 3rpx; font-size: 26rpx; }
+.order-footer { min-height: 62rpx; display: flex; align-items: center; justify-content: flex-end; padding: 8rpx 36rpx; border-top: 1rpx solid #edf1f6; background: #fbfcfe; }
+.pay-button { width: 200rpx; min-width: 200rpx; height: 96rpx; margin: 0; border-radius: 24rpx; color: #fff; background-color: #123a70; font-size: 28rpx; font-weight: 800; line-height: 96rpx; overflow: hidden; }
+.paid-note { display: flex; align-items: center; gap: 9rpx; color: #0d8a78; font-size: 26rpx; font-weight: 700; }
+.paid-icon { width: 34rpx; height: 34rpx; flex: 0 0 auto; }
+.closed-note { color: #8996a9; font-size: 24rpx; }

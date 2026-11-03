@@ -1,0 +1,30 @@
+.page { padding: 40rpx 36rpx 208rpx; }
+.hero { position: relative; overflow: hidden; padding: 52rpx 44rpx 44rpx; border-radius: 48rpx; color: #fff; background: linear-gradient(135deg, #0b2d59 0%, #174b89 56%, #0a7a71 128%); box-shadow: 0 28rpx 76rpx rgba(31,57,90,.13); }
+.hero-eyebrow, .hero-title, .hero-copy { position: relative; display: block; }
+.hero-eyebrow { display: flex; align-items: center; gap: 14rpx; color: #cae1ff; font-size: 24rpx; font-weight: 700; letter-spacing: 3rpx; }
+.hero-eyebrow image { width: 36rpx; height: 36rpx; }
+.hero-title { margin-top: 26rpx; font-size: 60rpx; font-weight: 800; line-height: 1.24; }
+.hero-copy { margin-top: 24rpx; color: #dbe8f8; font-size: 28rpx; line-height: 1.7; }
+.trust-list { position: relative; display: flex; flex-wrap: wrap; gap: 16rpx 28rpx; margin-top: 40rpx; color: #eef7ff; font-size: 24rpx; }
+.trust-list view { display: flex; align-items: center; gap: 10rpx; }
+.trust-list image { width: 28rpx; height: 28rpx; flex: 0 0 auto; }
+.search-panel { position: relative; margin-top: 40rpx; padding: 36rpx; border: 1rpx solid #dfe6ef; border-radius: 36rpx; background: #fff; box-shadow: 0 8rpx 32rpx rgba(31,57,90,.07); }
+.panel-label { display: block; margin-bottom: 20rpx; font-size: 30rpx; font-weight: 800; }
+.search-box { display: flex; gap: 16rpx; }
+.input-wrap { position: relative; min-width: 0; flex: 1; }
+.input-wrap input { width: 100%; height: 100rpx; box-sizing: border-box; padding: 0 96rpx 0 84rpx; border: 1rpx solid #cdd7e5; border-radius: 26rpx; color: #172338; background: #fbfcfe; font-size: 30rpx; }
+.search-icon { position: absolute; z-index: 2; top: 30rpx; left: 28rpx; width: 40rpx; height: 40rpx; }
+.clear-button { position: absolute; z-index: 2; top: 6rpx; right: 8rpx; width: 88rpx; height: 88rpx; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 0; background-color: transparent; line-height: normal; }
+.clear-button image { width: 36rpx; height: 36rpx; }
+.search-button { width: 60rpx; min-width: 60rpx; height: 100rpx; flex: 0 0 auto; align-self: center; padding: 0; border-radius: 24rpx; color: #fff; background-color: #123a70; box-shadow: 0 10rpx 26rpx rgba(18,58,112,.16); font-size: 24rpx; font-weight: 800; line-height: 100rpx; overflow: hidden; }
+.error { margin-top: 18rpx; color: #c43b44; font-size: 22rpx; }
+.search-note { display: flex; align-items: center; gap: 14rpx; margin: 24rpx 4rpx 0; color: #66748a; font-size: 24rpx; line-height: 1.5; }
+.search-note image { width: 32rpx; height: 32rpx; flex: 0 0 auto; }
+.proof-count { color: #c43b44; font-weight: 800; }
+.service-strip { display: flex; flex-direction: column; gap: 24rpx; margin-top: 36rpx; }
+.service-point { min-height: 132rpx; display: flex; align-items: center; gap: 24rpx; padding: 22rpx 32rpx; border: 1rpx solid #dfe6ef; border-radius: 28rpx; background: rgba(255,255,255,.82); }
+.point-mark { width: 84rpx; height: 84rpx; display: flex; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 26rpx; color: #fff; background: linear-gradient(145deg,#184d91,#2b78c5); box-shadow: 0 14rpx 36rpx rgba(18,58,112,.18); font-size: 28rpx; font-weight: 800; }
+.point-mark image { width: 52rpx; height: 52rpx; }
+.point-title, .point-copy { display: block; }
+.point-title { color: #172338; font-size: 28rpx; font-weight: 800; }
+.point-copy { margin-top: 4rpx; color: #66748a; font-size: 24rpx; }

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "complaints",
+  "type": "object",
+  "required": ["order_id", "contact_phone", "content", "status", "created_at"],
+  "properties": {
+    "order_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "openid": { "type": "string", "maxLength": 128 },
+    "contact_phone": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "content": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "status": { "enum": ["open", "resolved"] },
+    "staff_note": { "type": "string", "maxLength": 500 },
+    "created_at": { "type": ["object", "string"] },
+    "resolved_at": { "type": ["object", "string", "null"] }
+  }
+}

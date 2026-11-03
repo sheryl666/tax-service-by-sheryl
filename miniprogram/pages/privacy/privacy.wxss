@@ -1,0 +1,20 @@
+.detail-nav { position: sticky; z-index: 30; top: 0; border-bottom: 1rpx solid #dfe6ef; background: rgba(255,255,255,.98); }
+.detail-nav-inner { position: relative; display: flex; box-sizing: border-box; align-items: center; justify-content: center; }
+.back-button { position: absolute; z-index: 2; top: 50%; left: 8rpx; width: 88rpx; height: 88rpx; display: flex; align-items: center; justify-content: center; transform: translateY(-50%); }
+.back-button image { width: 44rpx; height: 44rpx; }
+.detail-nav-title { position: absolute; left: 50%; color: #172338; font-size: 32rpx; font-weight: 800; line-height: 1; white-space: nowrap; transform: translateX(-50%); pointer-events: none; }
+.page { width: 100%; box-sizing: border-box; padding: 32rpx 32rpx calc(64rpx + env(safe-area-inset-bottom)); }
+.policy-card { margin-bottom: 24rpx; padding: 32rpx; border: 1rpx solid #dfe6ef; border-radius: 28rpx; background: #fff; box-shadow: 0 8rpx 28rpx rgba(31,57,90,.06); }
+.intro-card { padding: 38rpx 34rpx; background: linear-gradient(145deg, #f7fbff, #f1fbf8); }
+.policy-title, .policy-meta, .section-title, .item-title, .paragraph { display: block; }
+.policy-title { color: #172338; font-size: 42rpx; font-weight: 800; line-height: 1.35; }
+.policy-meta { margin-top: 14rpx; color: #66748a; font-size: 22rpx; line-height: 1.65; white-space: pre-line; }
+.section-title { margin-bottom: 18rpx; color: #172338; font-size: 30rpx; font-weight: 800; line-height: 1.5; }
+.policy-item + .policy-item { margin-top: 24rpx; padding-top: 24rpx; border-top: 1rpx solid #edf1f6; }
+.item-title { margin-bottom: 8rpx; color: #314158; font-size: 26rpx; font-weight: 800; line-height: 1.55; }
+.paragraph { color: #405067; font-size: 26rpx; line-height: 1.78; text-align: justify; word-break: break-all; }
+.policy-actions { display: flex; flex-direction: column; gap: 16rpx; margin-top: 28rpx; }
+.secondary-action, .primary-action { min-height: 88rpx; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 22rpx; font-size: 26rpx; font-weight: 800; }
+.secondary-action { border: 1rpx solid #bfd2ea; color: #123a70; background: #eaf2ff; }
+.primary-action { color: #fff; background: #123a70; box-shadow: 0 12rpx 28rpx rgba(18,58,112,.17); }
+.secondary-action:active, .primary-action:active, .back-button:active { opacity: .82; }

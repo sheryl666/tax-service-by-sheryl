@@ -1,0 +1,26 @@
+.detail-nav { position: sticky; z-index: 30; top: 0; border-bottom: 1rpx solid #dfe6ef; background: rgba(255,255,255,.96); }
+.detail-nav-inner { position: relative; display: flex; box-sizing: border-box; align-items: center; justify-content: center; }
+.back-button { position: absolute; z-index: 2; top: 50%; left: 8rpx; width: 88rpx; height: 88rpx; display: flex; align-items: center; justify-content: center; transform: translateY(-50%); background: transparent; }
+.back-button image { width: 44rpx; height: 44rpx; }
+.detail-nav-title { position: absolute; left: 50%; color: #172338; font-size: 32rpx; font-weight: 800; line-height: 1; white-space: nowrap; transform: translateX(-50%); pointer-events: none; }
+.page { padding: 40rpx 36rpx 60rpx; }
+.test-banner { margin-bottom: 28rpx; padding: 24rpx 28rpx; border: 1rpx solid #bfe4dc; border-radius: 24rpx; color: #35665f; background: #eefaf7; font-size: 23rpx; line-height: 1.6; }
+.test-banner-title { display: block; margin-bottom: 6rpx; color: #087262; font-size: 27rpx; font-weight: 800; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24rpx; margin: 0 4rpx 28rpx; }
+.section-title, .section-copy { display: block; }
+.section-title { font-size: 40rpx; font-weight: 800; }
+.section-copy { margin-top: 8rpx; color: #66748a; font-size: 26rpx; }
+.result-count { flex: 0 0 auto; color: #66748a; font-size: 24rpx; }
+.results-list { display: flex; flex-direction: column; gap: 24rpx; }
+.company-card { padding: 36rpx; border: 1rpx solid #dfe6ef; border-radius: 36rpx; background: #fff; box-shadow: 0 8rpx 32rpx rgba(31,57,90,.07); }
+.company-topline { display: flex; align-items: flex-start; justify-content: space-between; gap: 26rpx; }
+.company-name { min-width: 0; flex: 1; color: #172338; font-size: 34rpx; font-weight: 800; line-height: 1.45; word-break: break-all; }
+.company-meta { display: flex; flex-direction: column; gap: 24rpx; margin-top: 30rpx; padding-top: 28rpx; border-top: 1rpx solid #edf1f6; }
+.meta-row { display: flex; gap: 16rpx; align-items: flex-start; line-height: 1.55; }
+.meta-label { flex: 0 0 164rpx; color: #66748a; font-size: 26rpx; }
+.meta-value { flex: 1; min-width: 0; color: #2c394d; font-size: 26rpx; line-height: 1.55; word-break: break-all; }
+.source-chip { flex: 0 0 auto; padding: 8rpx 14rpx; border-radius: 999rpx; color: #b86c08; background: #fff5df; font-size: 19rpx; font-weight: 700; }
+.source-chip.known { color: #087262; background: #e7f7f3; }
+.cert-button { width: 116rpx; min-width: 116rpx; height: 88rpx; display: flex; flex: 0 0 auto; align-items: center; justify-content: center; }
+.cert-button-surface { width: 116rpx; height: 68rpx; display: flex; align-items: center; justify-content: center; border-radius: 17rpx; color: #fff; background: #123a70; box-shadow: 0 8rpx 18rpx rgba(18,58,112,.16); font-size: 21rpx; font-weight: 800; white-space: nowrap; }
+.cert-button:active .cert-button-surface { opacity: .84; }
