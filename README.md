@@ -1,151 +1,218 @@
-# 财税代办小程序 · 微信云开发后端
+# 名企服务｜企业认证与财税代办微信小程序
 
-本仓库已实现 PRD v1.2 的数据库、云函数、后台前端、角色权限、登录鉴权和正式部署。
+一套基于微信小程序、腾讯云开发（CloudBase）和 React 的企业服务系统，覆盖企业查询、服务下单、微信支付、办理记录、投诉反馈及运营管理后台。
 
-## 已实现
+> WeChat Mini Program · Tencent CloudBase · Tax Service · Enterprise Service · React Admin
 
-- 集合：`orders`、`complaints`、`admin_users`；订单支持 `assigned_staff`，账号支持 `admin/operator` 角色及启停状态
-- 云函数：`adminLogin`、`getOrders`、`getOrderDetail`、`updateOrderStatus`、`getComplaints`、`resolveComplaint`、`claimOrder`、`getDashboardStats`、`getOperators`、`createOperator`、`toggleOperatorStatus`；另保留 `updateOperatorStatus` 兼容现有前端
-- JWT 8 小时登录态、bcrypt 密码校验、账号状态实时校验、分页/枚举/长度校验
-- 订单状态与 `status_logs` 在同一次原子更新中写入
-- 运营只能查看未分配或自己的订单；领取订单与更新状态均使用数据库条件原子更新
-- 管理员拥有全局数据看板和运营账号管理；运营拥有个人数据看板
-- 后台前端：登录页、订单工作台、订单详情页、运营账号管理页
-- 品牌统一显示为“名创财税”
-- CloudBase 匿名登录仅承担传输层会话，后台业务权限由 `adminLogin` JWT 和云函数角色校验承担
-- 小程序端恢复“企业查询 → 服务办理 → 办理记录”三入口；企业信息可自动带入下单页，办理记录按当前微信用户 `openid` 隔离查询
-- 小程序 UI/UX 对齐企业认证参考稿：首页搜索、服务详情、订单支付筛选和联系客服；用户投诉由 `createComplaint` 校验订单归属后写入后台工单
-- 工商年报提供基础、升级、至尊三档套餐，管理员可在“服务套餐”页面随时修改名称、价格、说明和上下架状态
+## 项目亮点
 
-## 后台前端
+| 使用端 | 已实现能力 |
+| --- | --- |
+| 微信小程序 | 企业查询、企业信息展示、服务套餐选择、订单创建与支付、办理记录、联系客服、投诉反馈 |
+| 运营后台 | 管理员/运营双角色登录、订单领取与跟进、状态流转、数据看板、运营账号管理、服务套餐管理 |
+| 云端服务 | 20 个 CloudBase 云函数、云数据库集合与索引、JWT 鉴权、bcrypt 密码哈希、微信支付服务 |
+| 工程质量 | 单元测试、端到端流程测试、安全校验、生产构建检查、敏感配置隔离 |
 
-前端工程位于 `admin-web/`，使用 React、Vite 和 CloudBase Web SDK：
+## 界面预览
+
+| 订单工作台 | 运营账号管理 |
+| --- | --- |
+| ![订单工作台](screenshots/11.2-admin-orders.png) | ![运营账号管理](screenshots/11.2-admin-accounts.png) |
+
+## 系统架构
+
+```mermaid
+flowchart LR
+  Mini[微信小程序] --> CF[CloudBase 云函数]
+  Admin[React 管理后台] --> CF
+  CF --> DB[(云数据库)]
+  CF --> TYC[企业查询服务]
+  Mini --> Pay[微信支付]
+  Pay --> PayService[支付回调服务]
+  PayService --> DB
+```
+
+## 技术栈
+
+- 小程序：微信原生 WXML / WXSS / JavaScript
+- 云端：腾讯云开发 CloudBase、Node.js 20
+- 管理后台：React 19、Vite、CloudBase Web SDK
+- 安全：JWT、bcrypt、角色权限、数据库条件原子更新
+- 测试：Node.js Test Runner、生产构建检查
+
+## 目录结构
+
+```text
+.
+├── miniprogram/       # 微信小程序页面、组件与资源
+├── cloudfunctions/    # CloudBase 云函数与微信支付服务
+├── admin-web/         # React 运营管理后台
+├── database/          # 集合、索引与 Schema 定义
+├── scripts/           # 初始化、密钥生成与冒烟测试脚本
+├── tests/             # 后端、权限和端到端测试
+├── screenshots/       # 小程序预览码与后台界面截图
+└── cloudbaserc.json   # CloudBase CLI 部署配置
+```
+
+## 快速开始
+
+### 1. 环境要求
+
+- Node.js 20 或更高版本
+- 微信开发者工具
+- 腾讯云开发环境
+- 已开通对应能力的微信小程序账号
+
+### 2. 获取代码并安装依赖
 
 ```bash
-cd admin-web
+git clone https://github.com/sheryl666/tax-service-by-sheryl.git
+cd tax-service-by-sheryl
 npm install
-npm run dev
+npm --prefix admin-web install
 ```
 
-生产构建与静态托管部署：
+支付服务有独立依赖：
 
 ```bash
-cd admin-web
-npm run build
-npx tcb hosting deploy dist -e cloud1-d9gju2ncx57d61c07
+npm --prefix cloudfunctions/payment2026-hg9hxxv0-demo-scfweb install
 ```
 
-Web 端开启 CloudBase 匿名登录作为传输层会话。后台账号只需存在于 `admin_users` 集合，密码以 bcrypt 哈希保存；业务登录由 `adminLogin` 校验并签发 JWT。
-
-### 网关与客户端安全规则
-
-- OPA 用户策略允许 `anonymous` 身份调用 `functions` 资源。
-- 云函数客户端安全规则为 `{"*":{"invoke":"auth != null"}}`，拒绝完全未登录的请求，同时允许已建立的匿名会话。
-- 除 `adminLogin` 外，所有业务函数都必须携带有效 JWT；敏感操作还会实时读取账号角色和启停状态。
-
-### 登录态安全
-
-- 业务 JWT 有效期为 8 小时，前端读取 `exp` 并在到期时自动清除本地登录态、跳转登录页。
-- 页面重新获得焦点、从后台恢复以及跨标签页修改登录态时，都会重新检查 token。
-- 任一受保护云函数返回 `UNAUTHORIZED`，或 CloudBase 传输层会话失效，都会统一退出。
-- 退出登录会同时清除业务 JWT 并注销 CloudBase 传输层会话。
-- 直接访问 `#/orders` 或订单详情等受保护路由时，没有有效 token 会返回登录页。
-
-正式发布使用根目录的一键命令；它会先执行后端测试、语法检查、前端鉴权测试和生产构建，全部通过后才上传：
+### 3. 配置微信小程序
 
 ```bash
-npm run deploy:admin
+cp project.config.example.json project.config.json
 ```
 
-## 部署前配置
+打开 `project.config.json`，将 `YOUR_WECHAT_MINIPROGRAM_APPID` 替换为自己的 AppID，再用微信开发者工具导入仓库根目录。真实配置已被 Git 忽略。
 
-1. 复制 `project.config.example.json` 为 `project.config.json`，填入小程序 AppID，并用微信开发者工具打开本目录。真实配置已被 Git 忽略，不会上传到仓库。
-2. 选择目标云开发环境，创建 `orders`、`complaints`、`admin_users` 三个集合。
-3. 将三个集合的权限都设为“所有用户不可读写”。索引按 `database/collections.json` 创建。
-4. 给十二个云函数设置相同环境变量：`ADMIN_JWT_SECRET`，值为至少 32 位的随机字符串。
-5. 对每个云函数选择“上传并部署：云端安装依赖”。
+### 4. 配置 CloudBase
 
-可在本地生成安全随机密钥（只复制到云函数环境变量，不要提交到 Git）：
+1. 在 `cloudbaserc.json` 中将 `envId` 改为自己的云开发环境 ID。
+2. 复制管理后台环境变量示例：
+
+```bash
+cp admin-web/.env.example admin-web/.env.local
+```
+
+3. 在 `admin-web/.env.local` 中填写同一个 CloudBase 环境 ID。
+4. 按 `database/collections.json` 创建集合和索引，并将业务集合权限设为“所有用户不可直接读写”。
+
+### 5. 运行检查
+
+```bash
+npm run check:all
+```
+
+该命令会依次执行后端测试、语法检查、支付服务测试、管理后台测试和生产构建。
+
+### 6. 启动管理后台
+
+```bash
+npm --prefix admin-web run dev
+```
+
+默认访问地址为 `http://127.0.0.1:5173`。
+
+## 必需配置
+
+敏感信息只应存放在本机配置、CloudBase 环境变量或部署平台的 Secret 中，不要提交到 Git。
+
+| 配置项 | 用途 | 是否必需 |
+| --- | --- | --- |
+| `VITE_CLOUDBASE_ENV_ID` | 管理后台连接 CloudBase | 是 |
+| `ADMIN_JWT_SECRET` | 后台 JWT 签名密钥，至少 32 位 | 是 |
+| `TYC_TOKEN` | 企业查询静态 Token | 与 OAuth 二选一 |
+| `TYC_CLIENT_ID` / `TYC_CLIENT_SECRET` | 企业查询 OAuth 凭证 | 与静态 Token 二选一 |
+| `appId`、`merchantId` | 微信支付应用与商户标识 | 启用支付时必需 |
+| `apiV3Key`、`merchantSerialNumber`、`privateKey` | 微信支付签名与回调解密 | 启用支付时必需 |
+| `notifyURLPayURL` | 微信支付 HTTPS 回调地址 | 启用支付时必需 |
+
+可在本地生成后台签名密钥：
 
 ```bash
 npm run generate-jwt-secret
 ```
 
-项目已配置为使用官方 CloudBase CLI 部署十二个函数：
+## 云数据库
+
+核心集合：
+
+- `orders`：订单、付款信息、负责人和状态日志
+- `complaints`：用户投诉与处理结果
+- `admin_users`：管理员及运营账号
+- `service_products`：服务套餐、价格和上下架状态
+
+集合与索引定义位于 `database/`。生产环境建议禁止客户端直接读写，由云函数统一校验身份和数据权限。
+
+## 初始化管理员和服务套餐
+
+创建初始管理员：
 
 ```bash
-LANTERN_ADMIN_JWT_SECRET="$(npm run --silent generate-jwt-secret)" npx tcb fn deploy --all
+ADMIN_INITIAL_USERNAME="admin" \
+ADMIN_INITIAL_DISPLAY_NAME="管理员" \
+ADMIN_INITIAL_PASSWORD="请替换为强密码" \
+npm run init-admin
 ```
 
-上面的命令用于首次部署。之后仅更新代码时，使用以下命令可保留线上 JWT 密钥和其他函数配置：
-
-```bash
-npx tcb fn code update adminLogin
-```
-
-将函数名替换为需要更新的函数；不要在已有登录会话时重新生成并覆盖 `ADMIN_JWT_SECRET`，否则现有 token 会立即失效。
-
-## 初始化管理员
-
-先生成密码哈希：
-
-```bash
-npm install
-npm run hash-password -- "你的强密码"
-```
-
-在 `admin_users` 集合新增：
-
-```json
-{
-  "username": "admin",
-  "password_hash": "上一步生成的 bcrypt 哈希",
-  "display_name": "管理员",
-  "role": "admin",
-  "status": "active",
-  "created_at": "使用云数据库日期类型填写当前时间"
-}
-```
-
-不要把明文密码、JWT 密钥或真实 AppID 提交到 Git。
-
-## 企业查询配置
-
-`searchCompany` 支持两种天眼查鉴权方式，优先读取已有静态 token：
-
-```text
-TYC_TOKEN=你的天眼查token
-```
-
-也可以配置 OAuth 客户端：`TYC_CLIENT_ID` 与 `TYC_CLIENT_SECRET`。以上凭证只放在云函数环境变量中，不要写入仓库。
-
-## 初始化正式套餐
-
-以下命令会幂等写入三档已上架套餐，套餐说明先留空，后续可在管理后台编辑：
+初始化工商年报服务套餐：
 
 ```bash
 npm run init-products
 ```
 
-- 基础套餐：¥199
-- 升级套餐：¥299
-- 至尊套餐：¥399
+脚本会写入基础、升级和至尊三档套餐，后续可在管理后台修改名称、价格、说明及上架状态。
 
-也可以使用初始化脚本直接写入目标云环境；明文密码仅通过进程环境变量传入，不会保存到仓库：
+## 部署
+
+首次部署云函数前，将安全密钥通过进程环境变量传入：
 
 ```bash
-ADMIN_INITIAL_USERNAME="admin" \
-ADMIN_INITIAL_DISPLAY_NAME="测试管理员" \
-ADMIN_INITIAL_PASSWORD="你的初始密码" \
-npm run init-admin
+LANTERN_ADMIN_JWT_SECRET="$(npm run --silent generate-jwt-secret)" \
+LANTERN_TYC_TOKEN="你的企业查询 Token" \
+npx tcb fn deploy --all
 ```
 
-`admin_users.username` 有唯一索引，脚本不会覆盖同名账号。
+只更新单个云函数代码时：
 
-## 云函数调用约定
+```bash
+npx tcb fn code update adminLogin
+```
 
-成功：`{ "success": true, ... }`
+部署管理后台：
 
-失败：`{ "success": false, "error": { "code": "UNAUTHORIZED", "message": "..." } }`
+```bash
+npm run check:all
+npm --prefix admin-web run build
+npx tcb hosting deploy admin-web/dist -e YOUR_CLOUDBASE_ENV_ID
+```
 
-除 `adminLogin` 外，其他函数均需传入登录返回的 `token`。运营账号由管理员在“运营账号”页面创建，密码同样只保存 bcrypt 哈希。
+微信支付服务的完整配置与部署说明见 [`cloudfunctions/payment2026-hg9hxxv0-demo-scfweb/README.md`](cloudfunctions/payment2026-hg9hxxv0-demo-scfweb/README.md)。
+
+## 权限与安全
+
+- 后台业务登录使用 8 小时有效期 JWT，并实时校验账号状态。
+- 密码仅保存 bcrypt 哈希，初始化脚本不输出明文或哈希。
+- 管理员拥有全局数据和账号管理权限；运营仅能处理未分配或分配给自己的订单。
+- 订单领取、状态更新和日志写入使用数据库条件更新，避免并发越权。
+- 小程序订单按当前微信用户 `openid` 隔离。
+- AppID、JWT 密钥、企业查询凭证及微信支付私钥均不应提交到仓库。
+
+## 测试
+
+```bash
+npm test                 # 后端与权限测试
+npm run test:e2e         # 订单端到端流程
+npm run test:payment     # 微信支付服务测试
+npm --prefix admin-web test
+npm run check:all        # 完整检查
+```
+
+## 项目状态
+
+当前版本已覆盖企业查询、财税服务下单、订单支付与跟进、用户反馈及后台运营的完整主流程。接入正式环境前，请替换示例配置并完成微信支付、企业查询服务和 CloudBase 权限的生产审核。
+
+## 授权说明
+
+本仓库目前尚未声明开源许可证。代码可公开浏览，但复制、修改、分发或商用前请先联系仓库所有者取得许可。
